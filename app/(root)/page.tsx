@@ -12,6 +12,7 @@ import React from "react";
 
 const Home = async () => {
   const clerkUser = await currentUser();
+  console.log("🚀 ~ Home ~ clerkUser:", clerkUser)
   if (!clerkUser) redirect("/sign-in");
 
   const roomDocuments = await getDocuments({ email: clerkUser.emailAddresses[0].emailAddress });

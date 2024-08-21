@@ -100,7 +100,7 @@ const CollaborativeRoom = ({ currentUserType, roomId, roomMetadata, users }: Col
               </SignedIn>
             </div>
           </Header>
-          <Editor />
+          <Editor roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
     </RoomProvider>
