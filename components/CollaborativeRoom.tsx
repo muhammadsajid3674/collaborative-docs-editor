@@ -9,6 +9,7 @@ import Loader from "./Loader";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { updateDocument } from "@/lib/actions/room.actions";
+import ShareModal from "./ShareModal";
 
 const CollaborativeRoom = ({ currentUserType, roomId, roomMetadata, users }: CollaborativeRoomProps) => {
   const [documentTitle, setDocumentTitle] = useState(roomMetadata.title);
@@ -77,21 +78,27 @@ const CollaborativeRoom = ({ currentUserType, roomId, roomMetadata, users }: Col
                   <p className="document-title">{documentTitle}</p>
                 </>
               )}
-              {currentUserType !== "editor" && !editing && (
+              {currentUserType === "editor" && !editing && (
                 <Image
-                  src={"/assets/icons/edit.svg"}
-                  alt=""
-                  height={24}
+                  src="/assets/icons/edit.svg"
+                  alt="edit"
                   width={24}
+                  height={24}
                   onClick={() => setEditing(true)}
-                  className="pointrt"
+                  className="pointer"
                 />
               )}
-              {currentUserType == "editor" && !editing && <p className="view-onlt-tag">View Only</p>}
+              {currentUserType !== "editor" && !editing && <p className="view-only-tag">View only</p>}
               {loading && <p className="text-sm text-gray-400">saving...</p>}
             </div>
             <div className="flex w-full flex-1 justify-end gap-2 sm:gap-3">
               <ActiveCollaborators />
+              <ShareModal
+                roomId={roomId}
+                collaborators={users}
+                creatorId={roomMetadata.creatorId}
+                currentUserType={currentUserType}
+              />
               <SignedOut>
                 <SignInButton />
               </SignedOut>
